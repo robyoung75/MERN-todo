@@ -36,7 +36,7 @@ function App() {
             </div>
         </nav>
         <br/>
-        <h2>MERN-stack Todo App</h2>
+        <h2 align="center" style={{padding: 25}}>MERN-Stack Todo App</h2>
         <Route path="/" component={TodoList} />
         <Route path="/edit/:id" component={EditTodo} />
         <Route path="/create" component={CreateTodo} />

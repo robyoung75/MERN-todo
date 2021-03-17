@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import instance from "../../axios";
 
 
-function Todo() {
+function TodoList() {
   const [todos, setTodos] = useState([]);
 
   const fetchData = async () => {
@@ -53,4 +53,4 @@ function Todo() {
   );
 }
 
-export default Todo;
+export default TodoList;
