@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import instance from "../../axios";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 function EditTodo() {
   const [desc, setDesc] = useState("");
   const [responsible, setResponsible] = useState("");
   const [priority, setPriority] = useState("");
   const [completed, setCompleted] = useState(false);
-  const [todos, setTodos] = useState();
+  const [todos, setTodos] = useState("");
   const [params, setParams] = useState("");
 
   const paramsId = useParams();
   const id = paramsId.id;
+
+  const history = useHistory();
 
   //   console.log("id >>>> ", id);
 
@@ -47,17 +49,13 @@ function EditTodo() {
   };
 
   const handleSetCompleted = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setCompleted(completed === false ? true : false);
   };
 
-  const handleSubmit = async () => {
-   
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     console.log("submit button");
-    // console.log("Form submitted");
-    // console.log(`Todo Description: ${desc}`);
-    // console.log(`Todo Responsible: ${responsible}`);
-    // console.log(`Todo Priority: ${priority}`);
 
     const updatedTodo = {
       todo_description: desc,
@@ -74,16 +72,24 @@ function EditTodo() {
     setPriority("");
     setCompleted(false);
     setParams("");
+
+    history.push("/");
   };
 
   useEffect(() => {
     setParams(id);
-    fetchData();
+    let mounted = true;
+    if (mounted) {
+      fetchData();
+    }
+    return () => {
+      mounted = false;
+    };
   }, [id]);
 
   return (
     <div className="EditTodo">
-      <h3 >Update Todo</h3>
+      <h3>Update Todo</h3>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="">Description: </label>

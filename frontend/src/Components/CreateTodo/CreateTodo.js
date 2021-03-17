@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import instance from "../../axios";
-import axios from 'axios'
+
 
 function CreateTodo() {
   const [desc, setDesc] = useState("");
@@ -23,18 +23,9 @@ function CreateTodo() {
     setPriority(e.target.value);
   };
 
-  const handleSetCompleted = (e) => {
-    e.preventDefault();
-    setCompleted(true);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault(e);
-    console.log("submit button")
-    // console.log("Form submitted");
-    // console.log(`Todo Description: ${desc}`);
-    // console.log(`Todo Responsible: ${responsible}`);
-    // console.log(`Todo Priority: ${priority}`);
+    console.log("submit button");
 
     const newTodo = {
       todo_description: desc,
@@ -45,8 +36,7 @@ function CreateTodo() {
 
     console.log("newTodo >>> ", newTodo);
 
-    await instance.post("/add", newTodo)
-  
+    await instance.post("/add", newTodo);
 
     setDesc("");
     setResponsible("");

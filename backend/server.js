@@ -30,8 +30,9 @@ app.get("/", (req, res) => {
   Todo.find((err, todos) => {
     if (err) {
       console.log(err);
+      res.status(400).send("No todos found")
     } else {
-      res.json(todos);
+      res.status(200).json(todos);
     }
   });
 });
@@ -41,7 +42,7 @@ app.get("/:id", (req, res) => {
   Todo.findById(id, (err, todo) => {
     if (err) {
       console.log(err);
-      res.status(400).send(err);
+      res.status(400).send("No document seems to exist with that ID");
     } else {
       res.json(todo);
     }
@@ -54,9 +55,10 @@ app.post("/add", (req, res) => {
   todo
     .save()
     .then((todo) => {
-      res.status(200).json({ todo: "todo added successfully" });
+      res.status(200).json(todo);
     })
     .catch((err) => {
+      console.log(err)
       res.status(400).send("adding new todo failed");
     });
 });
@@ -64,7 +66,8 @@ app.post("/add", (req, res) => {
 app.post("/update/:id", (req, res) => {
   Todo.findById(req.params.id, (err, todo) => {
     if (!todo) {
-      res.status(404).send("data is not found");
+      console.log(err)
+      res.status(404).send("No document exists");
     } else {
       todo.todo_description = req.body.todo_description;
       todo.todo_responsible = req.body.todo_responsible;
@@ -74,10 +77,11 @@ app.post("/update/:id", (req, res) => {
       todo
         .save()
         .then((todo) => {
-          res.status(200).json("Todo updated!");
+          res.status(200).json(todo);
         })
         .catch((err) => {
-          res.status(400).send("Update not possible", err);
+          console.log(err)
+          res.status(400).send("Update not possible");
         });
     }
   });
