@@ -4,13 +4,12 @@ import Todo from "../Todo/Todo";
 
 function TodoList() {
   const [todos, setTodos] = useState([]);
- 
 
   const fetchData = async () => {
     try {
       const response = await instance.get();
       if (response) {
-        //   console.log(response);
+        // console.log(response);
         setTodos(response.data);
       }
     } catch (error) {
@@ -46,7 +45,6 @@ function TodoList() {
                     priority={todo.todo_priority}
                     completed={todo.todo_completed}
                     id={todo._id}
-                  
                   />
                 );
               })

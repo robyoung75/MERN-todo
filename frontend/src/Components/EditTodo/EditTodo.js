@@ -15,8 +15,6 @@ function EditTodo() {
 
   const history = useHistory();
 
-  //   console.log("id >>>> ", id);
-
   const fetchData = async () => {
     try {
       const response = await instance.get("/" + id);
@@ -55,7 +53,6 @@ function EditTodo() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("submit button");
 
     const updatedTodo = {
       todo_description: desc,
@@ -65,7 +62,16 @@ function EditTodo() {
     };
 
     console.log("newTodo >>> ", updatedTodo);
-    await instance.post("/update/" + id, updatedTodo);
+    
+    try {
+      let response = await instance.post("/update/" + id, updatedTodo);
+      if (response) {
+        return response;
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
 
     setDesc("");
     setResponsible("");

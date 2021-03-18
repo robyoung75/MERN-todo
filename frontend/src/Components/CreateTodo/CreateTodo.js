@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import instance from "../../axios";
 
-
 function CreateTodo() {
   const [desc, setDesc] = useState("");
   const [responsible, setResponsible] = useState("");
@@ -25,7 +24,6 @@ function CreateTodo() {
 
   const handleSubmit = async (e) => {
     e.preventDefault(e);
-    console.log("submit button");
 
     const newTodo = {
       todo_description: desc,
@@ -36,7 +34,15 @@ function CreateTodo() {
 
     console.log("newTodo >>> ", newTodo);
 
-    await instance.post("/add", newTodo);
+    try {
+      const response = await instance.post("/add", newTodo);
+      if (response) {
+        return response;
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
 
     setDesc("");
     setResponsible("");

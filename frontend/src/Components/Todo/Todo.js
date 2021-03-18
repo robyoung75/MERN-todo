@@ -1,10 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import './Todo.css'
+import "./Todo.css";
 
 function Todo({ description, priority, responsible, id, completed }) {
-
-
   return (
     <tr key={id}>
       <td className={completed ? "completed" : ""}>{description}</td>
